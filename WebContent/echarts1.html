@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ECharts</title>
+<script type="text/javascript" src="js/echarts.js"></script>
+<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+<script type="text/javascript">
+	var myChart;
+	function showChart() {
+		myChart = echarts.init(document.getElementById('main'));
+		var option = {
+			title : {
+				text : 'ECharts 数据是异步获取的'
+			},
+			tooltip : {
+				trigger : 'axis'
+			},
+			legend : {
+				data : [ '销量1', '销量2' ]
+			},
+			xAxis : {
+				data : []
+			},
+			yAxis : {},
+			dataZoom : [ 
+			  { // 这个dataZoom组件，默认控制x轴。
+				type : 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+				start : 0, // 左边在 0% 的位置。
+				end : 50   // 右边在 50% 的位置。
+			 },
+			 {  // 这个dataZoom组件，也控制x轴。
+	            type: 'inside',// 这个 dataZoom 组件是 inside 型 dataZoom 组件
+	            start: 0,      // 左边在 0% 的位置。
+	            end: 50        // 右边在 50% 的位置。
+	        }],
+			series : [ {
+				name : '销量1',
+				type : 'line',
+				smooth : true,
+				data : []
+			}, {
+				name : '销量2',
+				type : 'line',
+				smooth : true,
+				data : []
+			} ]
+		};
+
+		myChart.setOption(option);
+	}
+
+	// 异步加载数据
+	function getData1() {
+		myChart.showLoading();
+		$.ajax({
+			url : '/echarts_demo/doChart1',
+			type : 'GET',
+			dataType : 'json',
+			timeout : 5000,
+			error : function() {
+				alert('通信失败。');
+			},
+			success : function(json) {
+				myChart.hideLoading();
+				// 填入数据
+				myChart.setOption({
+					xAxis : {
+						data : json.categories
+					},
+					series : [ {
+						name : '销量1',
+						data : json.data1
+					}, {
+						name : '销量2',
+						data : json.data2
+					} ]
+				});
+			}
+		});
+	}
+</script>
+</head>
+<body>
+	<div style="width: 100px; height: 40px;">
+		<button type="button" onclick="showChart()">显示图表</button>
+		<button type="button" onclick="getData1()">获取数据</button>
+	</div>
+	<div id="main" style="width: 600px; height: 400px;"></div>
+</body>
+</html>

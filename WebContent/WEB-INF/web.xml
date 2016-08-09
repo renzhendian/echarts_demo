@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">  
+  <!-- 测试echarts -->
+  <servlet>
+    <servlet-name>EchartsDemo1</servlet-name>
+    <servlet-class>cxing.echarts.EchartsDemo1</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EchartsDemo1</servlet-name>
+    <url-pattern>/doChart1</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>EchartsDemo2</servlet-name>
+    <servlet-class>cxing.echarts.EchartsDemo2</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EchartsDemo2</servlet-name>
+    <url-pattern>/doChart2</url-pattern>
+  </servlet-mapping>
+</web-app>
