@@ -1,2 +1,2 @@
 # echarts_demo
-echarts java
+在java项目中用echarts做图表的展示
